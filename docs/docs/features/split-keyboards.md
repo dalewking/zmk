@@ -15,7 +15,7 @@ Supporting split communication over wired protocols is planned, allowing for ZMK
 ## Central and Peripheral Roles
 
 In split keyboards running ZMK, one part is assigned the "central" role which receives key position and sensor events from the other parts that are called "peripherals."
-The central runs the necessary keymap logic to convert received events into HID events such as keycodes and then communicates with the connected host devices, e.g. over USB or bluetooth.
+The central runs the necessary keymap logic to convert received events into HID events such as keycodes and then communicates with the connected host devices, e.g. over USB or bluetooth. If the keyboard makes use of a [dongle](../development/hardware-integration/dongle.mdx), then the dongle takes on the role of central.
 
 The internal keyboard state (like active layers) is handled exclusively by the central.
 Peripherals _cannot_ communicate with host devices on their own, since they can only communicate with the central.
@@ -85,11 +85,6 @@ These are behaviors that affect all keyboard parts, such as changing lighting ef
 These behaviors only affect the keyboard part that they are invoked from:
 
 - [Reset behaviors](../keymaps/behaviors/reset.md)
-
-:::warning[Nesting behaviors with locality]
-Currently there is [an issue](https://github.com/zmkfirmware/zmk/issues/1494) preventing both global and source locality behaviors from working as expected if they are invoked from another behavior, such as a hold-tap, tap dance or a mod-morph.
-For this reason it is recommended that these behaviors are placed directly on a keymap layer.
-:::
 
 :::note[Peripheral invocation]
 Peripherals must be paired and connected to the central in order to be able to activate these behaviors, even if it is possible to trigger the behavior using only keys on a particular peripheral.
